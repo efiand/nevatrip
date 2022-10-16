@@ -1,0 +1,5 @@
+{% extends '../layout.twig' %}
+
+{% block main %}
+	{% include '../components/cards.twig' with { cards: events, component: 'event' } %}
+{% endblock %}

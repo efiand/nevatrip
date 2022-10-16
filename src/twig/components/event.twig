@@ -1,0 +1,15 @@
+<article class="event">
+	<h2 class="event__title">{{ title }}</h2>
+
+	{% if novelty or fullYear %}
+		<div class="event__labels">
+			{% if novelty %}
+				<p class="event__label">Новинка</p>
+			{% endif %}
+
+			{% if fullYear %}
+				<p class="event__label">Круглый год</p>
+			{% endif %}
+		</div>
+	{% endif %}
+</article>

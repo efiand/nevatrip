@@ -1,0 +1,14 @@
+{
+	"printWidth": 80,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"useTabs": true,
+	"overrides": [
+		{
+			"files": "*.html",
+			"options": {
+				"bracketSameLine": true
+			}
+		}
+	]
+}
