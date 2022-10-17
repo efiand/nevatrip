@@ -1,0 +1,32 @@
+{
+	"env": {
+		"browser": true,
+		"es2017": true
+	},
+	"extends": [
+		"eslint:all",
+		"prettier"
+	],
+	"overrides": [
+		{
+			"files": "*.js",
+			"env": {
+				"node": true
+			},
+			"rules": {
+				"no-process-env": "off"
+			}
+		}
+	],
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module"
+	},
+	"root": true,
+	"rules": {
+		"no-ternary": "off",
+		"one-var": "off",
+		"prefer-named-capture-group": "off",
+		"require-unicode-regexp": "off"
+	}
+}

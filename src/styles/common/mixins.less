@@ -1,0 +1,39 @@
+.visuallyHidden {
+	position: fixed;
+	transform: scale(0);
+}
+
+.transition(@props: 'color, background-color') {
+	transition-timing-function: ease-in-out;
+	transition-duration: 0.3s;
+	transition-property: ~'@{props}';
+}
+
+.button() {
+	.transition();
+
+	box-sizing: border-box;
+	font-family: inherit;
+	text-align: center;
+	text-decoration: none;
+	border: none;
+}
+
+.mask(@icon) {
+	mask: url('../images/icons.svg#@{icon}') no-repeat center / 100%;
+}
+
+.listItem() {
+	display: flex;
+	align-items: center;
+
+	&::before {
+		.mask('check');
+
+		content: '';
+		width: 16px;
+		height: 16px;
+		margin-right: 14px;
+		background-color: var(--colorSecondary);
+	}
+}
