@@ -31,15 +31,14 @@ const Path = {
 	ICONS: 'src/icons/**/*.svg',
 	Images: {
 		DEST: 'dist/images',
-		ENTRIES: [
-			'src/images/**/*.{jpg,png}',
-			'src/pixelperfect/**/*.{jpg,png}'
-		]
+		RASTERS: ['src/images/**/*.{jpg,png}', 'src/pixelperfect/**/*.{jpg,png}'],
+		VECTORS: 'src/images/**/*.svg'
 	},
 	Layouts: {
 		ALL: 'src/{data,layouts}/**/*.{js,twig}',
 		ENTRIES: 'src/layouts/pages/**/*.twig'
 	},
+	STATIC: 'src/static/**',
 	Scripts: {
 		ALL: ['src/scripts/**/*.js', '*.js'],
 		DEST: 'dist/scripts',
@@ -56,7 +55,7 @@ const postcssPlugins = [sortMediaQueries(), createAutoprefixes()];
 // Изменение настроек в production-режиме
 if (!devMode) {
 	Path.Scripts.ENTRIES.push('!src/scripts/dev.js');
-	Path.Images.ENTRIES.pop();
+	Path.Images.RASTERS.pop();
 
 	postcssPlugins.push(
 		minifyCss({
@@ -102,16 +101,20 @@ const buildScripts = () =>
 		.pipe(bundleScripts({ bundle: true, minify: !devMode }))
 		.pipe(dest(Path.Scripts.DEST));
 
-const buildImages = () =>
-	src(Path.Images.ENTRIES)
+const buildWebp = () =>
+	src(Path.Images.RASTERS)
 		.pipe(processImages({ webp: { quality: 75 } }))
 		.pipe(dest(Path.Images.DEST));
+
+const buildSvg = () => src(Path.Images.RASTERS);
 
 const buildSprite = () =>
 	src(Path.ICONS)
 		.pipe(useCondition(!devMode, minifySvg()))
 		.pipe(stacksvg({ output: 'icons' }))
 		.pipe(dest(Path.Images.DEST));
+
+const copyStatic = () => src(Path.STATIC).pipe(dest(Path.DEST));
 
 // Задачи линтинга
 
@@ -157,12 +160,14 @@ const startWatch = () => {
 
 	watch(Path.EDITORCONFIG, lintEditorconfig);
 	watch(Path.ICONS, series(buildSprite, reloadServer));
-	watch(Path.Images.ENTRIES, series(buildImages, reloadServer));
+	watch(Path.Images.RASTERS, series(buildWebp, reloadServer));
+	watch(Path.Images.VECTORS, series(buildSvg, reloadServer));
 	watch(Path.Layouts.ALL, series(processLayouts, reloadServer));
 	watch(
 		Path.Scripts.ALL,
 		parallel(series(buildScripts, reloadServer), lintScripts)
 	);
+	watch(Path.STATIC, series(copyStatic, reloadServer));
 	watch(
 		Path.Styles.ALL,
 		parallel(series(buildStyles, reloadServer), lintStyles)
@@ -171,13 +176,20 @@ const startWatch = () => {
 
 export const lint = parallel(
 	lintEditorconfig,
-	lintStyles,
 	lintScripts,
+	lintStyles,
 	processLayouts
 );
 export const build = series(
 	cleanDist,
 	lint,
-	parallel(buildStyles, buildScripts, buildImages, buildSprite)
+	parallel(
+		buildScripts,
+		buildSprite,
+		buildStyles,
+		buildSvg,
+		buildWebp,
+		copyStatic
+	)
 );
 export default series(build, startWatch);
