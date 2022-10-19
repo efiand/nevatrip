@@ -1,0 +1,61 @@
+.form {
+	display: grid;
+	gap: 20px;
+
+	@media @desktop {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.form__group {
+	flex-grow: 1;
+	margin: 0;
+	padding: 20px;
+	border: 1px solid var(--colorGrayLighter);
+	border-radius: 16px;
+}
+
+.form__label {
+	display: block;
+	margin: 0 0 10px;
+	font-size: 14px;
+}
+
+.form__field {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 5px;
+	background-color: transparent;
+	border: 1px solid var(--colorGrayLighter);
+	border-radius: 4px;
+	appearance: none;
+
+	&[type='number'] {
+		appearance: textfield;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			appearance: none;
+		}
+	}
+}
+
+.form__submit {
+	.button();
+
+	grid-column: 1 / -1;
+	padding: 11px 24px;
+	font-size: 16px;
+	color: var(--colorBlacky);
+	background-color: var(--colorSecondary);
+	border: none;
+	border-radius: 16px;
+}
+
+.form__status {
+	margin: 0;
+	padding: 20px;
+	font-size: 14px;
+	background-color: var(--colorPrimaryLightest);
+	border-radius: 20px;
+}

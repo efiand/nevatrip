@@ -1,4 +1,7 @@
+import commonData from './common/index.js';
+
 export default {
+	...commonData,
 	events: [
 		{
 			id: 1,
@@ -42,8 +45,6 @@ export default {
 		price: 900,
 		title:
 			'Обзорная экскурсия по рекам и каналам с&nbsp;остановками Hop on Hop Off 2020',
-		url: '#!'
-	})),
-	lang: 'ru',
-	project: 'nevatrip'
+		url: 'calculate.html'
+	}))
 };

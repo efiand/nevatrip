@@ -16,14 +16,39 @@
 			"rules": {
 				"no-process-env": "off"
 			}
-		}
+		},
+		{
+			"files": "*.svelte",
+			"processor": "svelte3/svelte3",
+			"rules": {
+				"one-var": "off",
+				"prefer-const": "off",
+				"require-atomic-updates": "off"
+			}
+		},
 	],
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module"
 	},
+	"plugins": [
+		"svelte3"
+	],
 	"root": true,
 	"rules": {
+		"no-magic-numbers": [
+			"error",
+			{
+				"ignore": [
+					-1,
+					0,
+					1,
+					10,
+					100
+				]
+			}
+		],
+		"no-new": "off",
 		"no-ternary": "off",
 		"one-var": "off",
 		"prefer-named-capture-group": "off",

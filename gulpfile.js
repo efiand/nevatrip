@@ -14,6 +14,7 @@ import processHtml from 'gulp-posthtml';
 import processImages from 'gulp-libsquoosh';
 import processPostcss from 'gulp-postcss';
 import processStylelint from 'stylelint';
+import processSvelte from 'esbuild-svelte';
 import reportStylelint from 'postcss-reporter';
 import server from 'browser-sync';
 import sortMediaQueries from 'postcss-sort-media-queries';
@@ -40,7 +41,7 @@ const Path = {
 	},
 	STATIC: 'src/static/**',
 	Scripts: {
-		ALL: ['src/scripts/**/*.js', '*.js'],
+		ALL: ['src/scripts/**/*.{js,svelte}', '*.js'],
 		DEST: 'build/scripts',
 		ENTRIES: ['src/scripts/*.js']
 	},
@@ -98,7 +99,13 @@ const buildStyles = () =>
 
 const buildScripts = () =>
 	src(Path.Scripts.ENTRIES)
-		.pipe(bundleScripts({ bundle: true, minify: !devMode }))
+		.pipe(
+			bundleScripts({
+				bundle: true,
+				minify: !devMode,
+				plugins: [processSvelte()]
+			})
+		)
 		.pipe(dest(Path.Scripts.DEST));
 
 const buildWebp = () =>
