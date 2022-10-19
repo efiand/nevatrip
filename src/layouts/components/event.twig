@@ -32,7 +32,7 @@
 						<ul class="event__links">
 							{% for link in feature.links %}
 								{% if loop.index == 4 and loop.length > 4 %}
-									<li class="event__linkItem event__linkItem_expander">
+									<li class="event__linkItem event__linkItem_expander" aria-hidden="true">
 										<button class="event__link" type="button">eщё...</button>
 									</li>
 								{% else %}
