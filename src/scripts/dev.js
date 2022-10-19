@@ -1,7 +1,7 @@
 import loadPP from 'pineglade-pp';
 
 const Breakpoint = {
-	DESKTOP: 1104,
+	DESKTOP: 1106,
 	MOBILE: 375
 };
 
@@ -9,7 +9,7 @@ const checkModPressed = (evt) =>
 	evt.ctrlKey || evt.shiftKey || evt.altKey || evt.metaKey;
 
 window.pinegladePP = {
-	breakpoints: Object.values(Breakpoint),
+	breakpoints: [Breakpoint.MOBILE, Breakpoint.DESKTOP],
 	ext: 'webp',
 	folder: 'images'
 };

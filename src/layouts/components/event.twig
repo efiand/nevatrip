@@ -1,17 +1,21 @@
 <article class="event">
 	<header class="event__header">
-		{% if novelty %}
-			<p class="event__label">Новинка</p>
-		{% endif %}
-
-		{% if fullYear %}
-			<p class="event__label event__label_secondary">Круглый год</p>
-		{% endif %}
-
 		<picture class="event__picture">
 			<source media="(min-width: 640px)" srcset="{{ image }}">
 			<img class="event__image" src="{{ mobileImage }}" alt="{{ imageText }}">
 		</picture>
+
+		{% if novelty or fullYear %}
+			<div class="event__labels">
+				{% if novelty %}
+					<p class="event__label">Новинка</p>
+				{% endif %}
+
+				{% if fullYear %}
+					<p class="event__label event__label_secondary">Круглый год</p>
+				{% endif %}
+			</div>
+		{% endif %}
 	</header>
 
 	<div class="event__content">
@@ -21,7 +25,7 @@
 
 		<ul class="event__features">
 			{% for feature in features %}
-				<li class="event__feature">
+				<li class="event__feature {{ feature.links ? 'event__feature_withLinks' }}">
 					{{ feature.text }}
 
 					{% if feature.links %}
@@ -45,11 +49,13 @@
 
 		<div class="event__details">
 			<div class="event__detailsContent">
-				<b class="event__lead">{{ price }} ₽</b>
-				<p class="event__text">{{ onboardPrice }} ₽ на причале</p>
+				<b class="event__lead">{{ price }}
+					₽</b>
+				<p class="event__text">{{ onboardPrice }}
+					₽ на причале</p>
 			</div>
 
-			<a class="event__button button" href="{{ url }}">Подробнее</a>
+			<a class="event__button" href="{{ url }}">Подробнее</a>
 		</div>
 	</div>
 </article>
