@@ -1,1 +1,1 @@
-(()=>{})();
+(()=>{var t=n=>{let e=n.querySelector(".event__linkItem_expander");if(!e)return;e.querySelector(".event__link").addEventListener("click",()=>{e.remove()})};document.querySelectorAll(".event").forEach(t);})();
