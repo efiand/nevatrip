@@ -26,11 +26,11 @@ const devMode = process.env.NODE_ENV === 'development';
 const lintMode = Boolean(process.env.LINT);
 
 const Path = {
-	DEST: 'dist',
+	DEST: 'build',
 	EDITORCONFIG: ['src/**/*.{js,less,twig,svg}', '*.{js,json}'],
 	ICONS: 'src/icons/**/*.svg',
 	Images: {
-		DEST: 'dist/images',
+		DEST: 'build/images',
 		RASTERS: ['src/images/**/*.{jpg,png}', 'src/pixelperfect/**/*.{jpg,png}'],
 		VECTORS: 'src/images/**/*.svg'
 	},
@@ -41,12 +41,12 @@ const Path = {
 	STATIC: 'src/static/**',
 	Scripts: {
 		ALL: ['src/scripts/**/*.js', '*.js'],
-		DEST: 'dist/scripts',
+		DEST: 'build/scripts',
 		ENTRIES: ['src/scripts/*.js']
 	},
 	Styles: {
 		ALL: 'src/styles/**/*.less',
-		DEST: 'dist/styles',
+		DEST: 'build/styles',
 		ENTRIES: 'src/styles/*.less'
 	}
 };
