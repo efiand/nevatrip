@@ -32,8 +32,7 @@ const Path = {
 	ICONS: 'src/icons/**/*.svg',
 	Images: {
 		DEST: 'build/images',
-		RASTERS: ['src/images/**/*.{jpg,png}', 'src/pixelperfect/**/*.{jpg,png}'],
-		VECTORS: 'src/images/**/*.svg'
+		RASTERS: ['src/images/**/*.{jpg,png}', 'src/pixelperfect/**/*.{jpg,png}']
 	},
 	Layouts: {
 		ALL: 'src/{data,layouts}/**/*.{js,twig}',
@@ -113,8 +112,6 @@ const buildWebp = () =>
 		.pipe(processImages({ webp: { quality: 75 } }))
 		.pipe(dest(Path.Images.DEST));
 
-const buildSvg = () => src(Path.Images.RASTERS);
-
 const buildSprite = () =>
 	src(Path.ICONS)
 		.pipe(useCondition(!devMode, minifySvg()))
@@ -168,7 +165,6 @@ const startWatch = () => {
 	watch(Path.EDITORCONFIG, lintEditorconfig);
 	watch(Path.ICONS, series(buildSprite, reloadServer));
 	watch(Path.Images.RASTERS, series(buildWebp, reloadServer));
-	watch(Path.Images.VECTORS, series(buildSvg, reloadServer));
 	watch(Path.Layouts.ALL, series(processLayouts, reloadServer));
 	watch(
 		Path.Scripts.ALL,
@@ -190,13 +186,6 @@ export const lint = parallel(
 export const build = series(
 	cleanDist,
 	lint,
-	parallel(
-		buildScripts,
-		buildSprite,
-		buildStyles,
-		buildSvg,
-		buildWebp,
-		copyStatic
-	)
+	parallel(buildScripts, buildSprite, buildStyles, buildWebp, copyStatic)
 );
 export default series(build, startWatch);
